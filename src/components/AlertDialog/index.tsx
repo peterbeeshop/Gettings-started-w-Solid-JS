@@ -10,7 +10,6 @@ import {
 import { TransitionProps } from "@suid/material/transitions";
 import { Accessor, createSignal, JSXElement} from "solid-js";
 import {ITodo} from "../Todo";
-import '../Todo/index.css';
 
 interface IDialog {
   todo: ITodo;
@@ -30,7 +29,7 @@ const Transition = function Transition(
   
   export default function AlertDialog({todo, todos, setTodos, isDialogOpen, setIsDailogOpen}: IDialog) {
     const [updatedTitle, setUpdatedTitle] = createSignal('');
-    
+
     const handleClose = () => {
       setIsDailogOpen(!isDialogOpen);
     };
@@ -48,17 +47,21 @@ const Transition = function Transition(
           TransitionComponent={Transition}
           onClose={handleClose}
           aria-describedby="alert-dialog-slide-description"
-          class="dialog"
         >
-          <DialogTitle>{"Update Todo item"}</DialogTitle>
-          <DialogContentText class="dialog-title" id="alert-dialog-slide-description">{todo.title}</DialogContentText>
+          <DialogTitle class='text-start'>{"Update Todo item"}</DialogTitle>
+          <DialogContentText class="text-center" id="alert-dialog-slide-description">{todo.title}</DialogContentText>
           <DialogContent>
-            <input type="text" value={updatedTitle()} onInput={(e) => setUpdatedTitle(e.currentTarget.value)} />
+            <input 
+              class='border-2 rounded border-slate-500 pl-2 outline-0 mr-4' 
+              type="text" 
+              value={updatedTitle()} 
+              onInput={(e) => setUpdatedTitle(e.currentTarget.value)} 
+            />
           </DialogContent>
-          <DialogActions>
+          <div class='flex items-center justify-center'>
             <Button color="inherit" onClick={handleClose}>Cancel</Button>
-            <Button onClick={() => updateTodoTitle(todo.id)}>Update</Button>
-          </DialogActions>
+            <Button disabled={updatedTitle() === ''} onClick={() => updateTodoTitle(todo.id)}>Update</Button>
+          </div>
         </Dialog>
       </div>
     );
