@@ -10,6 +10,7 @@ import {
 import { TransitionProps } from "@suid/material/transitions";
 import { Accessor, createSignal, JSXElement} from "solid-js";
 import {ITodo} from "../Todo";
+import '../Todo/index.css';
 
 interface IDialog {
   todo: ITodo;
@@ -46,14 +47,15 @@ const Transition = function Transition(
           TransitionComponent={Transition}
           onClose={handleClose}
           aria-describedby="alert-dialog-slide-description"
+          class="dialog"
         >
-          <DialogTitle>{"Use Google's location service?"}</DialogTitle>
-          <DialogContentText id="alert-dialog-slide-description">{todo.title}</DialogContentText>
+          <DialogTitle>{"Update Todo item"}</DialogTitle>
+          <DialogContentText class="dialog-title" id="alert-dialog-slide-description">{todo.title}</DialogContentText>
           <DialogContent>
             <input type="text" value={updatedTitle()} onInput={(e) => setUpdatedTitle(e.currentTarget.value)} />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
+            <Button color="inherit" onClick={handleClose}>Cancel</Button>
             <Button onClick={() => updateTodoTitle(todo.id)}>Update</Button>
           </DialogActions>
         </Dialog>
