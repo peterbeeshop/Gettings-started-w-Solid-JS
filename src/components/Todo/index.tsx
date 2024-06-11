@@ -14,10 +14,16 @@ const Todo: Component = () => {
     const [todos, setTodos] = createSignal<ITodo[]>([]);
     const [text, setText] = createSignal<string>('')
     const [isDialogOpen, setIsDialogOpen] = createSignal(false);
+    const [isErrors, setIsErrors] = createSignal(false);
 
     const addTodo = () => {
-        setTodos([...todos(), {id: Math.floor(Math.random() * 100), title: text(), isCompleted: false}])
-        setText('');
+        if (text() !== '') {
+            setTodos([...todos(), {id: Math.floor(Math.random() * 100), title: text(), isCompleted: false}])
+            setText('');
+        }else {
+            setIsErrors(!isErrors());
+            console.log('here', isErrors())
+        }
     }
 
     const toggleIsTodoComplete = (id: number) => {
@@ -33,7 +39,10 @@ const Todo: Component = () => {
     return (
       <div class='container'>
         <h2>Todos</h2>
+       <div>
         <input type='text' value={text()} onInput={(e) => setText(e.currentTarget.value)} />
+        {isErrors() && <p style={{color: 'red'}}>Enter a title</p>}
+       </div>
         <button onClick={addTodo}>Create Todo</button>
         <h3>My Todos</h3>
         {

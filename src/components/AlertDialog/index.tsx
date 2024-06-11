@@ -30,6 +30,7 @@ const Transition = function Transition(
   
   export default function AlertDialog({todo, todos, setTodos, isDialogOpen, setIsDailogOpen}: IDialog) {
     const [updatedTitle, setUpdatedTitle] = createSignal('');
+    
     const handleClose = () => {
       setIsDailogOpen(!isDialogOpen);
     };
